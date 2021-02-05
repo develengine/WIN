@@ -11,6 +11,8 @@
 #include "wglext.h"
 // #include "glext.h"
 
+// FIXME Can't change input method while window selected.
+
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
 #endif
@@ -491,13 +493,10 @@ void goFullscreen(HWND hwnd) {
     if (style & WS_OVERLAPPEDWINDOW) {
         MONITORINFO monitorInfo = { sizeof(monitorInfo) };
 
-        printf("1\n");
-
         if (GetWindowPlacement(hwnd, &previousWP) &&
                 GetMonitorInfo(MonitorFromWindow(hwnd, MONITOR_DEFAULTTOPRIMARY),
                     &monitorInfo)
         ) {
-            printf("2\n");
             SetWindowLong(hwnd, GWL_STYLE, style & ~WS_OVERLAPPEDWINDOW);
             SetWindowPos(hwnd, HWND_TOP,
                     monitorInfo.rcMonitor.left, monitorInfo.rcMonitor.top,
@@ -506,12 +505,40 @@ void goFullscreen(HWND hwnd) {
                     SWP_NOOWNERZORDER | SWP_FRAMECHANGED);
         }
     } else {
-        printf("3\n");
         SetWindowLong(hwnd, GWL_STYLE, style | WS_OVERLAPPEDWINDOW);
         SetWindowPlacement(hwnd, &previousWP);
         SetWindowPos(hwnd, NULL, 0, 0, 0, 0,
                 SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER |
                 SWP_NOOWNERZORDER | SWP_FRAMECHANGED);
+    }
+}
+
+
+int mouseRelative = 0;
+
+void updateCursorRect(HWND hwnd) {
+    if (mouseRelative) {
+        RECT windowRect;
+        GetClientRect(hwnd, &windowRect);
+        ClientToScreen(hwnd, (POINT*)&windowRect.left);
+        ClientToScreen(hwnd, (POINT*)&windowRect.right);
+        ClipCursor(&windowRect);
+    }
+}
+
+void relativeMouse(HWND hwnd, int val) {
+    if (val) {
+        if (!mouseRelative) {
+            mouseRelative = 1;
+            updateCursorRect(hwnd);
+            SetCursor(NULL);
+        }
+    } else {
+        if (mouseRelative) {
+            mouseRelative = 0;
+            ClipCursor(NULL);
+            SetCursor(LoadCursor(NULL, IDC_ARROW));
+        }
     }
 }
 
@@ -542,6 +569,8 @@ LRESULT CALLBACK WindowProc(
 
             clientWidth = rectangleWidth;
             clientHeight = rectangleHeight;
+
+            updateCursorRect(windowHandle);
         } break;
 
         case WM_CLOSE:
@@ -569,12 +598,12 @@ LRESULT CALLBACK WindowProc(
             // {
                 // 
             // }
-            /*
-            printf("%s: %d, %d\n",
-                    absoluteMode ? "ABS" : "REL",
-                    data->data.mouse.lLastX,
-                    data->data.mouse.lLastY);
-            */
+            if (mouseRelative) {
+                printf("%s: %d, %d\n",
+                        absoluteMode ? "ABS" : "REL",
+                        data->data.mouse.lLastX,
+                        data->data.mouse.lLastY);
+            }
 
             delete[] rawData;
         } break;
@@ -591,8 +620,9 @@ LRESULT CALLBACK WindowProc(
             }
 
             if ((char)wParam == 'f') {
-                printf("fullscreen\n");
                 goFullscreen(windowHandle);
+            } else if ((char)wParam == 'm') {
+                relativeMouse(windowHandle, !mouseRelative);
             }
 
             printf("WM_CHAR: %lc, %llx\n", (unsigned int)wParam, wParam);

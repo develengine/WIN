@@ -2,11 +2,5 @@ Vendor: Intel
 Renderer: Intel(R) HD Graphics
 Version: 4.4.0 - Build 20.19.15.4835
 Shading Language Version: 4.40 - Build 20.19.15.4835
-WM_KEYDOWN: F, 46
-WM_KEYDOWN: F, 46
-WM_KEYDOWN: F, 46
-WM_KEYDOWN: F, 46
-WM_KEYDOWN: F, 46
-WM_KEYDOWN: F, 46
-WM_KEYDOWN: F, 46
-WM_KEYDOWN: F, 46
+WM_KEYDOWN: M, 4d
+WM_KEYDOWN: M, 4d
