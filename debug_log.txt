@@ -2,38 +2,11 @@ Vendor: Intel
 Renderer: Intel(R) HD Graphics
 Version: 4.4.0 - Build 20.19.15.4835
 Shading Language Version: 4.40 - Build 20.19.15.4835
-WM_KEYDOWN: Û, db
-WM_CHAR: [, 5b
-WM_KEYDOWN: Ý, dd
-WM_CHAR: ], 5d
-WM_KEYDOWN: , 10
-WM_KEYDOWN: Û, db
-WM_CHAR: {, 7b
-WM_KEYDOWN: Ý, dd
-WM_CHAR: }, 7d
-WM_KEYDOWN: º, ba
-WM_CHAR: ;, 3b
-WM_KEYDOWN: Þ, de
-WM_CHAR: ', 27
-WM_KEYDOWN: Ü, dc
-WM_CHAR: \, 5c
-WM_KEYDOWN: , 10
-WM_KEYDOWN: º, ba
-WM_CHAR: :, 3a
-WM_KEYDOWN: Þ, de
-WM_CHAR: ", 22
-WM_KEYDOWN: Ü, dc
-WM_CHAR: |, 7c
-WM_KEYDOWN: ¼, bc
-WM_CHAR: ,, 2c
-WM_KEYDOWN: ¾, be
-WM_CHAR: ., 2e
-WM_KEYDOWN: ¿, bf
-WM_CHAR: /, 2f
-WM_KEYDOWN: , 10
-WM_KEYDOWN: ¼, bc
-WM_CHAR: <, 3c
-WM_KEYDOWN: ¾, be
-WM_CHAR: >, 3e
-WM_KEYDOWN: ¿, bf
-WM_CHAR: ?, 3f
+WM_KEYDOWN: F, 46
+WM_KEYDOWN: F, 46
+WM_KEYDOWN: F, 46
+WM_KEYDOWN: F, 46
+WM_KEYDOWN: F, 46
+WM_KEYDOWN: F, 46
+WM_KEYDOWN: F, 46
+WM_KEYDOWN: F, 46
